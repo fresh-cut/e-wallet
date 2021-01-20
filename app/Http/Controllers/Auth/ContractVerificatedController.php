@@ -14,9 +14,23 @@ class ContractVerificatedController extends Controller
 {
     public function verifed(Request $request)
     {
+        if($request->back==12)
+        {
+            $request->session()->forget('smstime');
+            return redirect()->route('verifed');
+        }
+        if(!Auth::check())
+            return redirect()->route('home');
         $user=Auth::user();
         if($user->checkContract)
             return redirect()->route('home');
+
+        if(session('smstime'))
+        {
+            $code=0;
+            return view('checkCode', compact('code'));
+        }
+            session(['smstime'=> 60]);
         $code=random_int ( 1111, 9999);
         $data=[
             'telephone'=>$user->telephone,
@@ -30,16 +44,14 @@ class ContractVerificatedController extends Controller
             $user_token=user_token::create($data);
         }
         // отправляем смс
+
         return view('checkCode', compact('code'));
     }
 
     public function checkCode(Request $request)
     {
-        $request->validate([
-            'code' => 'required|max:4',
-        ]);
         if(!$user_token=user_token::where('telephone', Auth::user()->telephone)->where('code', $request->code)->first()){
-            dd('error');
+            return response()->json('', 404);
         }
         $data=[
             'checkContract'=>1,
@@ -48,9 +60,8 @@ class ContractVerificatedController extends Controller
         $user=User::find($user_id);
         $user->checkContract=1;
         $user->save();
-        return redirect()
-            ->route('dashboard')
-            ->with(['message-success'=>'регистрация прошла успешно']);
-
+        $request->session()->forget('smstime');
+        $request->session()->put('message-success', 'Вы успешно подписали договор');
+        return response()->json('', 200);
     }
 }

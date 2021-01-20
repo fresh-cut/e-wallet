@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=
   , initial-scale=1.0">
     <title>Contract</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -23,8 +24,7 @@
 
 </style>
 <div class="wrapper">
-    <form method="POST" action="{{ route('verifed') }}">
-        @csrf
+    <form method="get" action="{{ route('verifed') }}">
         <div class="form-title">
             <span style="margin-bottom: 15px">Подписание договора</span>
             <span></span>

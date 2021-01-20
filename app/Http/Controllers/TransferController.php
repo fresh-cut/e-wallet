@@ -18,6 +18,8 @@ class TransferController extends Controller
         $data=$request->all();
         $data['money']=str_replace(',', '.', $data['money']);
         $data['who']=$user->id;
+//        $this->checkSms();
+
         if($data['type']=='sop')
         {
             $whomuser=User::where('telephone', $data['whom'])->first();
@@ -62,5 +64,10 @@ class TransferController extends Controller
                         ->with('message-success', 'Запрос на вывод средств сформирован');
             }
         }
+    }
+
+    public function checkSms()
+    {
+        return view('checkCode');
     }
 }

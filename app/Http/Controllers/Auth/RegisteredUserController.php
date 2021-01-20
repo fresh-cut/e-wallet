@@ -39,15 +39,15 @@ class RegisteredUserController extends Controller
             'password' => 'required|string|confirmed|min:8',
         ]);
 
-        Auth::login(User::create([
+        Auth::login($user=User::create([
             'name' => $request->name,
             'email' => $request->email,
             'telephone'=>$request->telephone,
             'password' => Hash::make($request->password),
         ]));
 //        dd($user);
-//        event(new Registered($user));
-        return redirect()->route('contract');
+        event(new Registered($user));
+        return redirect()->route('home');
 //        return redirect(RouteServiceProvider::HOME);
     }
 }

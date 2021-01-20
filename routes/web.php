@@ -30,19 +30,19 @@ Route::post('/transfer', ['\App\Http\Controllers\TransferController', 'transfer'
     ->middleware('auth', 'contractAuth');
 Route::get('/transfer', function () {
     return redirect()->route('home');
-})->name('transfer');
+})->name('transfer')->middleware('auth', 'contractAuth');
 
 
 Route::get('/contract', ['\App\Http\Controllers\Auth\ContractController', 'index'])->name('contract');
-Route::post('/contractVerifed', ['\App\Http\Controllers\Auth\ContractVerificatedController', 'verifed'])->name('verifed');
-Route::get('/contractVerifed', function () {
-    return redirect()->route('home');
-})->name('verifed');
+Route::get('/contractVerifed', ['\App\Http\Controllers\Auth\ContractVerificatedController', 'verifed'])->name('verifed');
+//Route::get('/contractVerifed', function () {
+//    return redirect()->route('home');
+//})->name('verifed');
 
 Route::post('/checkCode', ['\App\Http\Controllers\Auth\ContractVerificatedController', 'checkCode'])->name('checkCode');
-//Route::get('/checkCode', function () {
-//    return redirect()->route('home');
-//})->name('checkCode');
+Route::get('/checkCode', function () {
+    return redirect()->route('home');
+})->name('checkCode');
 
 
 // Админка

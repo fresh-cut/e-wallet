@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=
   , initial-scale=1.0">
-    <title>Подстверждение через смс</title>
+    <title>Подтверждение через смс</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -23,21 +23,61 @@
 
 </style>
 <div class="wrapper">
-    <form method="POST" action="{{ route('checkCode') }}">
-        @csrf
+    <form id="form">
         <div class="form-title">
             <span style="margin-bottom: 15px"> Введите 4-ех значный код с вашего мобильного телефона для подписания договора и создания счета
              (test code: {{ $code }})
             </span>
             <span></span>
         </div>
-        @include('includes.result_messages')
-        <input type="number" name="code" placeholder="code" required>
-        <input type="submit" value="Подтвердить" class="btn">
+        <span id="error" class="visually-hidden" style="color:red; font-size: 15px">Перепроверьте SMS-код</span>
+        <input class="input" onclick="removeBorder()" type="number" name="code" id="code" placeholder="code" required>
+        <div id="timerBlock" class="visually-hidden"  style="margin-bottom: 10px">
+            <p style="font-size: 14px">Выслать код повторно через <span class="seconds">60</span> секунд</p>
+        </div>
+        <input type="button" onclick="run()" value="Подтвердить" class="btn input">
     </form>
+
 </div>
 </body>
 </html>
+
+<script src="//code.jquery.com/jquery-3.5.1.min.js" ></script>
+<script src="{{ asset('js/check.js') }}"></script>
+<script>
+    form.addEventListener('keydown', function(event) {
+        if(event.keyCode == 13) {
+            event.preventDefault();
+        }
+    });
+
+    function run(){
+        var value=$('#code').val();
+        $.ajax({
+            url: '{{ route('checkCode') }}',
+            type: "POST",
+            traditional: true,
+            data:  {
+                "code": value,
+                "_token": "{{ csrf_token() }}",
+            },
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            success: function (data) {
+                console.log('ok');
+                window.location.pathname = '/dashboard';
+            },
+            error: function (msg) {
+                $('#error').removeClass('visually-hidden');
+                $('#timerBlock').removeClass('visually-hidden');
+                $('#code').addClass('red-border');
+                console.log('error');
+            }
+        });
+    }
+</script>
 
 
 
