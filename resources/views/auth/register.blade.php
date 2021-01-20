@@ -1,59 +1,46 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=
+  , initial-scale=1.0">
+    <title>Регистрация</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+</head>
 
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
+<body>
+<style>
+    form{
+        height: auto;
+        padding: 20px 30px
+    }
+    .form-title{
+        font-size: 25px;
+    }
 
-            <!-- Name -->
-            <div>
-                <x-label for="name" :value="__('Name')" />
+</style>
+<div class="wrapper">
+    <form method="POST" action="{{ route('register') }}">
+        @csrf
+        <div class="form-title">
+            <span style="margin-bottom: 15px">Регистрация</span>
+            <span></span>
+        </div>
+        @include('includes.result_messages')
+        <input class="input" type="text" name="name" id="name" placeholder="Введите фио" required value="{{ old('name', '') }}">
+        <input class="input" type="email" name="email" id="email" placeholder="Введите e-mail" required value="{{ old('email', '') }}">
+        <input class="input" type="text" name="telephone" id="telephone" placeholder="Введите номер телефона" required value="{{ old('telephone', '') }}">
+        <input class="input" type="password" name="password" id="password" placeholder="Введите пароль" required>
+        <input class="input" type="password" name="password_confirmation" id="password_confirmation" placeholder="Повторите пароль" required>
+        <input class="input btn" type="submit" value="Зарегистрироваться" >
+    </form>
+</div>
+</body>
+</html>
 
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
-            </div>
 
-            <!-- Email Address -->
-            <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-            </div>
 
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
-            </div>
-
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <x-button class="ml-4">
-                    {{ __('Register') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>

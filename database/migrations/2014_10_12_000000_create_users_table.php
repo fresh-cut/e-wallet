@@ -16,6 +16,11 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('telephone', 11)->unique();
+            $table->double('money', 13, 7)->default(0);
+            $table->foreignId('percent')->default(5);
+            $table->boolean('checkContract')->default(false);
+            $table->boolean('frozen')->default(false);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
