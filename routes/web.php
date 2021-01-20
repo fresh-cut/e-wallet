@@ -14,12 +14,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    if(\Illuminate\Support\Facades\Auth::check())
+        return redirect()->route('dashboard');
     return view('template');
 })->name('home');
 
-Route::get('/dashboard', ['\App\Http\Controllers\UserController', 'index'] )->name('dashboard')->middleware('auth');
-Route::post('/transfer', ['\App\Http\Controllers\TransferController', 'transfer'] )->name('transfer')->middleware('auth');
+Route::get('/logout', function (){
+    abort(404);
+});
 
+Route::get('/dashboard', ['\App\Http\Controllers\UserController', 'index'] )
+    ->name('dashboard')
+    ->middleware('auth', 'contractAuth');
+Route::post('/transfer', ['\App\Http\Controllers\TransferController', 'transfer'] )
+    ->name('transfer')
+    ->middleware('auth', 'contractAuth');
+Route::get('/transfer', function () {
+    return redirect()->route('home');
+})->name('transfer');
 
 
 Route::get('/contract', ['\App\Http\Controllers\Auth\ContractController', 'index'])->name('contract');
@@ -46,6 +58,9 @@ Route::group($groupData, function(){
     Route::resource('user', 'UserController')
         ->names('admin.user');
 
+    //transfer
+    Route::resource('transfer', 'TransferController')
+        ->names('admin.transfer');
 });
 
 // login admin

@@ -13,6 +13,8 @@ class TransferController extends Controller
     public function transfer(TransferAddRequest $request)
     {
         $user=Auth::user();
+        if($user->frozen==1)
+            return back()->withErrors('Переводы заморожены!');
         $data=$request->all();
         $data['money']=str_replace(',', '.', $data['money']);
         $data['who']=$user->id;

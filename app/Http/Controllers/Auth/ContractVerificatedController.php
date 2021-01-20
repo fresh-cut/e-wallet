@@ -30,7 +30,7 @@ class ContractVerificatedController extends Controller
             $user_token=user_token::create($data);
         }
         // отправляем смс
-        return view('checkCode');
+        return view('checkCode', compact('code'));
     }
 
     public function checkCode(Request $request)
@@ -50,7 +50,7 @@ class ContractVerificatedController extends Controller
         $user->save();
         return redirect()
             ->route('dashboard')
-            ->with(['success'=>'регистрация прошла успешно']);
+            ->with(['message-success'=>'регистрация прошла успешно']);
 
     }
 }

@@ -43,7 +43,6 @@
                     <label for="frozen" class="form-check-label">Заморожен</label>
                 </div>
 
-
                 <div class="form-group">
                     <button class="btn btn-dark" type="submit">Сохранить</button>
                     <a href="{{ route('admin.user.index') }}" class="btn btn-secondary ">назад</a>

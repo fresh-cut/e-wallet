@@ -22,7 +22,15 @@
         Меню
     </span>
     <ul>
-        <li class="menu-item"><a href="" class="menu-link">Пункт 1</a></li>
+        <li class="menu-item">
+            <a href="" class="menu-link">Пункт 1</a>
+        </li>
+        <li class="menu-item">
+            <form  method="post" action="{{ route('logout') }}">
+                @csrf
+                <input class="input btn" type="submit" value="Выйти" >
+            </form>
+        </li>
     </ul>
     <img src="{{asset('img/plus.png')}}" alt="close" class="menu-close">
 </div>
@@ -94,10 +102,6 @@
         @endforeach
     @endif
 
-    <form  method="post" action="{{ route('logout') }}">
-        @csrf
-        <button type="submit">Выйти</button>
-    </form>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script src="{{ asset('js/main.js') }}"></script>

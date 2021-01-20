@@ -11,9 +11,7 @@ class UserController extends Controller
     public function index()
     {
         $user= Auth::user();
-        $money_transfer=MoneyTransfer::where('who', $user->id)->orderBy('id', 'desc')->toBase()->get();
-//        dd($money_transfer);
-//        dd($user);
+        $money_transfer=MoneyTransfer::where('who', $user->id)->orderBy('updated_at', 'desc')->toBase()->get();
         return view('cabinet', compact('user', 'money_transfer'));
     }
 }

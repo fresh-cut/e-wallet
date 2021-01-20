@@ -25,6 +25,7 @@
             <ul class="sidebar-menu list-unstyled">
 
                 <li class="sidebar-menu-item"><a class="sidebar-menu-link" href="{{ route('admin.user.index') }}">Пользователи</a></li>
+                <li class="sidebar-menu-item"><a class="sidebar-menu-link" href="{{ route('admin.transfer.index') }}">Переводы</a></li>
                 <li class="sidebar-menu-item"><a class="sidebar-menu-link" href="{{ route('admin.logout') }}">Выход</a></li>
             </ul>
         </div>

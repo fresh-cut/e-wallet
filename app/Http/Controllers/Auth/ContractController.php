@@ -12,7 +12,9 @@ class ContractController extends Controller
     {
         if(!Auth::check())
             return redirect()->route('home');
-//        dd(Auth::user());
-        return view('contract');
+        if(Auth::check() && Auth::user()->checkContract==0)
+            return view('contract');
+        else
+            return redirect()->route('dashboard');
     }
 }

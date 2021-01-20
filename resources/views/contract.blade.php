@@ -30,7 +30,7 @@
             <span></span>
         </div>
         <a style="text-align: left; width: 100%" href="{{ asset('terms-of-use.docx') }}">Пользовательское соглашение</a>
-        <input type="submit" value="Подписать" class="btn">
+        <input class=" btn input" type="submit" value="Подписать">
     </form>
 
 </div>

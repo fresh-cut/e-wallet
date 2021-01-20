@@ -26,7 +26,9 @@
     <form method="POST" action="{{ route('checkCode') }}">
         @csrf
         <div class="form-title">
-            <span style="margin-bottom: 15px"> Введите 4-ех значный код с вашего мобильного телефона для подписания договора и создания счета</span>
+            <span style="margin-bottom: 15px"> Введите 4-ех значный код с вашего мобильного телефона для подписания договора и создания счета
+             (test code: {{ $code }})
+            </span>
             <span></span>
         </div>
         @include('includes.result_messages')

@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use http\Env\Request;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class TransferAddRequest extends FormRequest
 {
