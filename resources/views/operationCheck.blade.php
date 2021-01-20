@@ -25,7 +25,7 @@
 <div class="wrapper">
     <form id="form">
         <div class="form-title">
-            <span style="margin-bottom: 15px"> Введите 4-ех значный код с вашего мобильного телефона для подписания договора и создания счета
+            <span style="margin-bottom: 15px"> Введите 4-ех значный код с вашего мобильного телефона для подтвеждения операции
              (test code: {{ $code }})
             </span>
             <span></span>
@@ -43,6 +43,7 @@
 </html>
 
 <script src="//code.jquery.com/jquery-3.5.1.min.js" ></script>
+<script src="{{ asset('js/check.js') }}"></script>
 <script>
     form.addEventListener('keydown', function(event) {
         if(event.keyCode == 13) {
@@ -52,7 +53,7 @@
 
     function backClick()
     {
-        location.href="/contractVerifed?back=12";
+        location.href="/operationCheck?back=14";
     }
 
     $('#timerBlock').removeClass('visually-hidden');
@@ -81,7 +82,7 @@
     function run(){
         var value=$('#code').val();
         $.ajax({
-            url: '{{ route('checkCode') }}',
+            url: '{{ route('operationCheckCode') }}',
             type: "POST",
             traditional: true,
             data:  {
@@ -94,7 +95,7 @@
             },
             success: function (data) {
                 console.log('ok');
-                window.location.pathname = '/dashboard';
+                window.location.pathname = '/continueTransfer';
             },
             error: function (msg) {
                 $('#error').removeClass('visually-hidden');

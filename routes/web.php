@@ -31,13 +31,17 @@ Route::post('/transfer', ['\App\Http\Controllers\TransferController', 'transfer'
 Route::get('/transfer', function () {
     return redirect()->route('home');
 })->name('transfer')->middleware('auth', 'contractAuth');
-
+Route::get('/continueTransfer', ['\App\Http\Controllers\TransferController', 'continueTransfer'] )
+    ->name('continueTransfer')
+    ->middleware('auth', 'contractAuth', 'checkCode');
 
 Route::get('/contract', ['\App\Http\Controllers\Auth\ContractController', 'index'])->name('contract');
 Route::get('/contractVerifed', ['\App\Http\Controllers\Auth\ContractVerificatedController', 'verifed'])->name('verifed');
-//Route::get('/contractVerifed', function () {
-//    return redirect()->route('home');
-//})->name('verifed');
+
+Route::get('/operationCheck', ['\App\Http\Controllers\OperationCheckController', 'verifedOperation'])->name('operationCheck');
+Route::post('/operationCheckCode', ['\App\Http\Controllers\OperationCheckController', 'checkCode'])->name('operationCheckCode');
+
+
 
 Route::post('/checkCode', ['\App\Http\Controllers\Auth\ContractVerificatedController', 'checkCode'])->name('checkCode');
 Route::get('/checkCode', function () {

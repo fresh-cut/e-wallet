@@ -17,25 +17,44 @@ class TransferController extends Controller
             return back()->withErrors('Переводы заморожены!');
         $data=$request->all();
         $data['money']=str_replace(',', '.', $data['money']);
-        $data['who']=$user->id;
-//        $this->checkSms();
+        if ($user->money < $data['money'])
+            return back()
+                ->withInput()
+                ->withErrors('Сумма вывода не может быть больше суммы на балансе');
 
-        if($data['type']=='sop')
-        {
-            $whomuser=User::where('telephone', $data['whom'])->first();
-            if(!$whomuser)
+        if($data['type']=='sop') {
+            $whomuser = User::where('telephone', $data['whom'])->first();
+            if (!$whomuser)
                 return back()
                     ->withInput()
                     ->withErrors('Пользователь с таким номером не существует');
-            if($data['whom']==$user->telephone)
+            if ($data['whom'] == $user->telephone)
                 return back()
                     ->withInput()
                     ->withErrors('Нельзя перевести самому себе');
-            if($user->money<$data['money'])
-                return back()
-                    ->withInput()
-                    ->withErrors('Сумма вывода не может быть больше суммы на балансе');
+        }
+        $request->session()->put('typeTransfer',$data['type']);
+        $request->session()->put('whomTransfer',$data['whom']);
+        $request->session()->put('moneyTransfer',$data['money']);
+        return redirect()->route('operationCheck');
 
+    }
+
+    public function continueTransfer(Request $request)
+    {
+        if($request->session()->has('checkCode') && $request->session()->get('checkCode')=='success')
+            $request->session()->forget('checkCode');
+        if(!$request->session()->has('typeTransfer') || !$request->session()->has('whomTransfer') || !$request->session()->has('moneyTransfer'))
+            return redirect()->route('dashboard')
+                ->with('message-success', 'Ошибка перевода, попробуйте еще раз');
+        $data['type']=$request->session()->get('typeTransfer');
+        $data['whom']=$request->session()->get('whomTransfer');
+        $data['money']=$request->session()->get('moneyTransfer');
+        $user=Auth::user();
+        $data['who']=$user->id;
+        if($data['type']=='sop')
+        {
+            $whomuser = User::where('telephone', $data['whom'])->first();
             $user->money=$user->money-$data['money'];
             $whomuser->money=$whomuser->money+$data['money'];
             if($user->save() && $whomuser->save())
@@ -50,10 +69,6 @@ class TransferController extends Controller
 
         }
         else {
-            if($user->money<$data['money'])
-                return back()
-                    ->withInput()
-                    ->withErrors('Сумма вывода не может быть больше суммы на балансе');
             $data['status']='2';
             $user->money=$user->money-$data['money'];
             if($user->save())
@@ -65,9 +80,11 @@ class TransferController extends Controller
             }
         }
     }
-
-    public function checkSms()
-    {
-        return view('checkCode');
-    }
 }
+
+
+
+
+
+
+

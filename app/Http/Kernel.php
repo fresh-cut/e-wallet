@@ -64,5 +64,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'costumAuth'=>\App\Http\Middleware\CostumAuth::class,
         'contractAuth'=>\App\Http\Middleware\ContractMiddleware::class,
+        'checkCode'=>\App\Http\Middleware\CheckCodeMiddleware::class,
     ];
 }
