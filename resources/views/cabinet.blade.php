@@ -50,6 +50,7 @@
                     0
                 @endif
             </span>
+            <span style="font-size: 15px"><br>Процентная ставка: {{$user->percent}}%/мес.</span>
 
         </div>
         <img style="height: 15px; width: 15px;" src="{{asset('img/plus.png')}}" alt="Plus" class="plus-btn">
