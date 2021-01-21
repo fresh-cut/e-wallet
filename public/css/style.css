@@ -288,12 +288,27 @@ p {
     display: inline-block;
     margin-bottom: 30px;
 }
-.transfer {
-    padding: 25px;
-    border-radius: 25px;
-    background-color: #fff;
-    margin-top: 25px;
-    text-align: left
+
+@media (min-width: 150px) {
+    .transfer {
+        padding: 25px;
+        border-radius: 25px;
+        background-color: #fff;
+        margin: 25px auto;
+        width: 100%;
+        text-align: left
+    }
+}
+
+@media (min-width: 992px) {
+    .transfer {
+        padding: 25px;
+        border-radius: 25px;
+        background-color: #fff;
+        margin: 25px auto;
+        width: 50%;
+        text-align: left
+    }
 }
 
 .transfer-status {

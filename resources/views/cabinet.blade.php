@@ -23,7 +23,7 @@
     </span>
     <ul>
         <li class="menu-item">
-            <a href="" class="menu-link">Пункт 1</a>
+            <a class="menu-link" href="{{ asset('terms-of-use.docx') }}">Пользовательское соглашение</a>
         </li>
         <li class="menu-item">
             <form  method="post" action="{{ route('logout') }}">
@@ -53,7 +53,7 @@
             <span style="font-size: 15px"><br>Процентная ставка: {{$user->percent}}%/мес.</span>
 
         </div>
-        <img style="height: 15px; width: 15px;" src="{{asset('img/plus.png')}}" alt="Plus" class="plus-btn">
+        <a href="https://t.me/SopOne_Bot" target="_blank"><img style="height: 15px; width: 15px;" src="{{asset('img/plus.png')}}" alt="Plus" class="plus-btn"></a>
     </div>
 
     <form method="POST" action="{{ route('transfer') }}">
