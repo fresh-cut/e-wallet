@@ -31,6 +31,15 @@ class LoginRequest extends FormRequest
         return [
             'telephone' => 'required|numeric|regex:/(8)[0-9]{10}/',
             'password' => 'required|string',
+//            'g-recaptcha-response' => 'required|captcha',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+          'g-recaptcha-response.required'=>'Вы не прошли проверку "Я не робот"',
+          'g-recaptcha-response.captcha'=>'Вы не прошли проверку "Я не робот"',
         ];
     }
 

@@ -14,7 +14,7 @@
 <body>
 <style>
     form{
-        height: 280px;
+        height: auto;
         padding: 20px 30px
     }
     .form-title{
@@ -32,10 +32,16 @@
         @include('includes.result_messages')
         <input class="input" type="phone" name="telephone" id="telephone" placeholder="Введите номер телефона">
         <input class="input" type="password" name="password" id="password" placeholder="Введите пароль">
+
+        <div class="form-title">
+            {!! app('captcha')->display() !!}
+            <span></span>
+        </div>
         <input class="input btn" type="submit" value="Авторизоваться">
     </form>
 </div>
 </body>
+{!! NoCaptcha::renderJs()  !!}
 </html>
 
 
