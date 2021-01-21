@@ -24,8 +24,7 @@ class OperationCheckController extends Controller
 
         if(session('smstime'))
         {
-            $code=0;
-            return view('operationCheck', compact('code'));
+            return view('operationCheck');
         }
         session(['smstime'=> 60]);
         $code=random_int ( 1111, 9999);
@@ -40,9 +39,15 @@ class OperationCheckController extends Controller
         else {
             $user_token=user_token::create($data);
         }
-        // отправляем смс
-
-        return view('operationCheck', compact('code'));
+        $url_sms='https://'.env('SMS_EMAIL').':'.env('SMS_SECRET_KEY').'@gate.smsaero.ru/v2/sms/send?number='.$user->telephone.'&text='.$code.'&sign='.env('SMS_NAME');
+        $server_answer=json_decode(file_get_contents($url_sms), true);
+        if($server_answer['success']!=true)
+        {
+            $server_answer=json_decode(file_get_contents($url_sms), true);
+            if($server_answer['success']!=true)
+                return redirect()->route('dashboard')->with('message-success','Ошибка отправки. Повторите попытку позже');
+        }
+        return view('operationCheck');
     }
 
     public function checkCode(Request $request)

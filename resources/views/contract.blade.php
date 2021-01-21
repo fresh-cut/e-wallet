@@ -35,6 +35,15 @@
 
 </div>
 </body>
+<script>
+
+    window.onload = function() {
+        @if( session()->has('message-success'))
+        alert("{{ session()->get('message-success') }}");
+        {{ \Illuminate\Support\Facades\Session::forget('message-success') }}
+        @endif
+    };
+</script>
 </html>
 
 

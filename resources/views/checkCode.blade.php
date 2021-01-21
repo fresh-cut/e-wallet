@@ -26,7 +26,6 @@
     <form id="form">
         <div class="form-title">
             <span style="margin-bottom: 15px"> Введите 4-ех значный код с вашего мобильного телефона для подписания договора и создания счета
-             (test code: {{ $code }})
             </span>
             <span></span>
         </div>
@@ -74,7 +73,7 @@
 
         setTimeout(function() {
             clearInterval(timerId);
-            $('#timerBlock').html('<button onclick="backClick()">Выслать код повторно</button>');
+            $('#timerBlock').html('<button type="button" onclick="backClick()">Выслать код повторно</button>');
         }, num*1000);
     }
 
