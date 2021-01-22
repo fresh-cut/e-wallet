@@ -52,7 +52,7 @@ Route::get('/checkCode', function () {
 // Админка
 $groupData=[
     'middleware'=>'costumAuth',
-    'namespace'=>'\App\Http\Controllers\admin',
+    'namespace'=>'\App\Http\Controllers\Admin',
     'prefix'=>'admin/', // то что будет в строке url после имени сайта
 ];
 Route::group($groupData, function(){
