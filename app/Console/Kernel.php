@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
-            DB::statement('UPDATE users SET money = money + money * percent / 100');
+            DB::statement('UPDATE users SET money = money + (money * (percent/'.date('t').')) / 100');
         })
 //            ->everyThreeMinutes();
 //            ->everyMinute();

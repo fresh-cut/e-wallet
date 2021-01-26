@@ -31,7 +31,7 @@ class LoginRequest extends FormRequest
         return [
             'telephone' => 'required|numeric|regex:/(8)[0-9]{10}/',
             'password' => 'required|string',
-//            'g-recaptcha-response' => 'required|captcha',
+            'g-recaptcha-response' => 'required|captcha',
         ];
     }
 
